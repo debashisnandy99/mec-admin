@@ -3,6 +3,7 @@ import { Container, Button, Row, Col, Card, Pagination } from "react-bootstrap"
 import Header from "./components/header"
 import Loading from "./components/loading"
 import NoDataFound from "./components/nodatafound"
+import SubmitModal from "./components/submitmodal"
 import axios from "../../services/api"
 import { url } from "../../services/details"
 import { getUser, isLoggedIn, logout, handleLogin } from "../../services/auth"
@@ -18,10 +19,17 @@ class PendingPage extends React.Component {
       totalNumber: 0,
       items: [],
       isEmpty: true,
+      modalShow: false,
+      uid: "",
+      errorMessage: "",
     }
   }
 
   componentDidMount() {
+    this.getData()
+  }
+
+  getData = () => {
     axios
       .get("/verifier/getlist?page=" + this.state.active, {
         headers: {
@@ -48,7 +56,34 @@ class PendingPage extends React.Component {
         })
       })
       .catch(e => {
-        console.log(e.response.data)
+        if (e.response.data.message === "jwt expired") {
+          logout()
+        }
+      })
+  }
+
+  verifyUserDocsForm = event => {
+    let target = event.target
+    let form_data = new FormData()
+    form_data.append("uid", this.state.uid)
+    form_data.append("status", "verified")
+    form_data.append("image", target.image.files[0])
+    axios
+      .post("/verifier/verifydocs", form_data, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Bearer ${getUser().token}`,
+        },
+      })
+      .then(res => {
+        this.getData()
+        this.setState({ errorMessage: "", uid: "", modalShow: false })
+      })
+      .catch(e => {
+        this.setState({ errorMessage: e.response.data.message })
+        if (e.response.data.message === "jwt expired") {
+          logout()
+        }
       })
   }
 
@@ -171,7 +206,17 @@ class PendingPage extends React.Component {
                             </div>
                           </Col>
                           <Col md={{ span: 3, offset: 3 }}>
-                            <Button variant="primary" size="lg" block>
+                            <Button
+                              variant="primary"
+                              size="lg"
+                              onClick={() => {
+                                this.setState({
+                                  uid: value.user._id,
+                                  modalShow: true,
+                                })
+                              }}
+                              block
+                            >
                               Verify
                             </Button>
                             <Button variant="danger" size="lg" block>
@@ -192,6 +237,12 @@ class PendingPage extends React.Component {
             </Row>
           </Container>
         )}
+        <SubmitModal
+          show={this.state.modalShow}
+          onHide={() => this.setState({ modalShow: false })}
+          errorMessage={this.state.errorMessage}
+          verifyUserDocsForm={e => this.verifyUserDocsForm(e)}
+        />
       </>
     )
   }

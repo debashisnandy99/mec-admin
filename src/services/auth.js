@@ -1,5 +1,7 @@
 import axios from "./api"
 
+import { navigate } from "gatsby"
+
 export const isBrowser = () => typeof window !== "undefined"
 
 export const getUser = () =>
@@ -14,14 +16,14 @@ export const handleLogin = async (uname, password) => {
   let form_data = new FormData()
   form_data.append("username", uname)
   form_data.append("password", password)
-  console.log(uname);
+  console.log(uname)
   try {
     let data = await axios.post("/verifier/login", form_data, {
       headers: {
         "content-type": "multipart/form-data",
       },
     })
-    console.log(data.data);
+    console.log(data.data)
     setUser({
       token: data.data.token,
       uid: data.data.userId,
@@ -40,5 +42,8 @@ export const isLoggedIn = () => {
 }
 
 export const logout = () => {
+  navigate("", {
+    replace: true,
+  })
   setUser({})
 }

@@ -27,7 +27,7 @@ class VerifiedPage extends React.Component {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: `Bearer ${getUser().token}`,
-          Docs: "pending",
+          Docs: "verified",
         },
       })
       .then(res => {
@@ -44,7 +44,7 @@ class VerifiedPage extends React.Component {
           docs: [...res.data.doc.docs],
           items: [...items],
           totalNumber: res.data.doc.totalItems,
-          isEmpty: false,
+          isEmpty: res.data.doc.totalItems==0,
         })
       })
       .catch(e => {

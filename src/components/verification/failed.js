@@ -27,7 +27,7 @@ class FailedPage extends React.Component {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: `Bearer ${getUser().token}`,
-          Docs: "pending",
+          Docs: "fail",
         },
       })
       .then(res => {

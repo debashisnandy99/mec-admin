@@ -8,7 +8,7 @@ import { url } from "../../services/details"
 import { getUser, isLoggedIn, logout, handleLogin } from "../../services/auth"
 import * as PendingStyles from "./pending.module.css"
 
-class PendingPage extends React.Component {
+class FailedPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -174,9 +174,6 @@ class PendingPage extends React.Component {
                             <Button variant="primary" size="lg" block>
                               Verify
                             </Button>
-                            <Button variant="danger" size="lg" block>
-                              Fail
-                            </Button>
                           </Col>
                         </Row>
                       </Container>
@@ -197,4 +194,4 @@ class PendingPage extends React.Component {
   }
 }
 
-export default PendingPage
+export default FailedPage

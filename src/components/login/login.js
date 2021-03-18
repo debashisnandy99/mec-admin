@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { navigate } from "gatsby"
 import {
   Col,
   Container,
@@ -34,6 +35,9 @@ const LoginPage = () => {
             setErrorMessage(value.message)
             setVaidationStatus(true)
           } else {
+            navigate("/", {
+              replace: true,
+            })
             setErrorMessage("")
             setVaidationStatus(false)
           }
@@ -60,6 +64,11 @@ const LoginPage = () => {
         ) : (
           <div></div>
         )}
+        <Row>
+          <Col md={{ span: 6, offset: 3 }} className="text-center">
+            <h2>Admin Panel</h2>
+          </Col>
+        </Row>
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>

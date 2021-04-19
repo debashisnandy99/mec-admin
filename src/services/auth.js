@@ -18,9 +18,12 @@ export const handleLogin = async (uname, password) => {
   form_data.append("password", password)
   console.log(uname)
   try {
-    let data = await axios.post("/verifier/login", form_data, {
+    let data = await axios.post("/verifier/login", {
+      "username": uname,
+      "password": password
+    }, {
       headers: {
-        "content-type": "multipart/form-data",
+        "content-type": "application/json",
       },
     })
     console.log(data.data)

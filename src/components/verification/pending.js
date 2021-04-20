@@ -7,6 +7,7 @@ import {
   Card,
   Pagination,
   Table,
+  Modal,
 } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
@@ -37,6 +38,13 @@ class PendingPage extends React.Component {
 
   componentDidMount() {
     this.getData()
+  }
+
+  showVerifyDialog = value => {
+    this.setState({
+      uid: value.user._id,
+      modalShow: true,
+    })
   }
 
   getData = () => {
@@ -135,7 +143,6 @@ class PendingPage extends React.Component {
                           this.getData()
                         }}
                       />
-                      
                     </Card.Body>
                   </Card>
                 </Col>
@@ -146,7 +153,10 @@ class PendingPage extends React.Component {
             <Row>
               <Col>
                 {this.state.user ? (
-                  <UserProfile value={this.state.user}></UserProfile>
+                  <UserProfile
+                    showVerifyDialog={val => this.showVerifyDialog(val)}
+                    value={this.state.user}
+                  ></UserProfile>
                 ) : (
                   <Table responsive className="bg-white pointerCursor">
                     <thead>
@@ -183,13 +193,20 @@ class PendingPage extends React.Component {
                 
               ))} */}
             </Row>
-            <Row>
-              <Col sm={12} className="text-right">
-                <Pagination>{this.state.items}</Pagination>
-              </Col>
-            </Row>
+            {this.state.user ? (
+              <></>
+            ) : this.state.items.length === 1 ? (
+              <></>
+            ) : (
+              <Row>
+                <Col sm={12} className="text-right">
+                  <Pagination>{this.state.items}</Pagination>
+                </Col>
+              </Row>
+            )}
           </Container>
         )}
+
         <SubmitModal
           show={this.state.modalShow}
           onHide={() => this.setState({ modalShow: false })}
@@ -202,4 +219,3 @@ class PendingPage extends React.Component {
 }
 
 export default PendingPage
-

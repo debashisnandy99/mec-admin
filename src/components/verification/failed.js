@@ -56,7 +56,7 @@ class FailedPage extends React.Component {
           docs: [...res.data.doc.docs],
           items: [...items],
           totalNumber: res.data.doc.totalItems,
-          isEmpty:  res.data.doc.totalItems == 0,
+          isEmpty: res.data.doc.totalItems == 0,
         })
       })
       .catch(e => {
@@ -86,7 +86,9 @@ class FailedPage extends React.Component {
                           width: "20px",
                         }}
                         onClick={() => {
-                          this.getData()
+                          this.setState({
+                            user: undefined,
+                          })
                         }}
                       />
                     </Card.Body>
@@ -138,11 +140,17 @@ class FailedPage extends React.Component {
                 
               ))} */}
             </Row>
-            <Row>
-              <Col sm={12} className="text-right">
-                <Pagination>{this.state.items}</Pagination>
-              </Col>
-            </Row>
+            {this.state.user ? (
+              <></>
+            ) : this.state.items.length === 1 ? (
+              <></>
+            ) : (
+              <Row>
+                <Col sm={12} className="text-right">
+                  <Pagination>{this.state.items}</Pagination>
+                </Col>
+              </Row>
+            )}
           </Container>
         )}
       </>

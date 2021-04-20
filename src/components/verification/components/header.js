@@ -11,7 +11,12 @@ import {
 import LeftPage from "./left"
 import RightPage from "./right"
 import axios from "../../../services/api"
-import { getUser, isLoggedIn, logout, handleLogin } from "../../../services/auth"
+import {
+  getUser,
+  isLoggedIn,
+  logout,
+  handleLogin,
+} from "../../../services/auth"
 import * as ProfileCss from "./header.module.css"
 
 const HeaderPage = () => {
@@ -25,7 +30,7 @@ const HeaderPage = () => {
   }
   useEffect(() => {
     window.addEventListener("resize", updateDimensions)
-    console.log(`Bearer ${getUser().token}`);
+    console.log(`Bearer ${getUser().token}`)
     axios
       .get("/verifier/user", {
         headers: {
@@ -42,18 +47,37 @@ const HeaderPage = () => {
     return () => window.removeEventListener("resize", updateDimensions)
   }, [])
 
+  const departmentName = () => {
+    if (user.department.name === "adhaar") {
+      return "Adhaar Department"
+    } else if (user.department.name === "pan") {
+      return "PanCard Department"
+    } else {
+      return "BirthCertificate Department"
+    }
+  }
   return (
     <div className={`${ProfileCss.backgroundDiv} full-container`}>
       <Navbar className={`${ProfileCss.navBg} py-3`} expand="lg">
-        <Navbar.Text>MEC ID: Unavailable</Navbar.Text>
+        <Navbar.Text
+          style={{
+            color: "black !important",
+            fontWeight: "bold ",
+          }}
+        >
+          {user ? departmentName() : ""}
+        </Navbar.Text>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             <Dropdown>
               <Dropdown.Toggle className={ProfileCss.dropdown}>
-                Hi, <span className={ProfileCss.boldText}>{!user?".........." : user.name}</span>{" "}
+                Hi,{" "}
+                <span className={ProfileCss.boldText}>
+                  {!user ? ".........." : user.name}
+                </span>{" "}
                 <span className={ProfileCss.nameBox}>
-                  {!user ? ".": user.name.substring(0, 1)}
+                  {!user ? "." : user.name.substring(0, 1)}
                 </span>
               </Dropdown.Toggle>
 
@@ -65,7 +89,6 @@ const HeaderPage = () => {
         </Navbar.Collapse>
       </Navbar>
       <Container className="mt-4">
-        
         {!user ? (
           <Spinner
             style={{
@@ -80,6 +103,7 @@ const HeaderPage = () => {
             <Col md={3}>
               <LeftPage
                 user={user}
+                departmentName={user ? departmentName() : ""}
                 currentNav={navOptions}
                 changeNavListener={idx => setNavOptions(idx)}
               />

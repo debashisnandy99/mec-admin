@@ -86,7 +86,9 @@ class VerifiedPage extends React.Component {
                           width: "20px",
                         }}
                         onClick={() => {
-                          this.getData()
+                          this.setState({
+                            user: undefined,
+                          })
                         }}
                       />
                     </Card.Body>
@@ -138,11 +140,17 @@ class VerifiedPage extends React.Component {
                 
               ))} */}
             </Row>
-            <Row>
-              <Col sm={12} className="text-right">
-                <Pagination>{this.state.items}</Pagination>
-              </Col>
-            </Row>
+            {this.state.user ? (
+              <></>
+            ) : this.state.items.length === 1 ? (
+              <></>
+            ) : (
+              <Row>
+                <Col sm={12} className="text-right">
+                  <Pagination>{this.state.items}</Pagination>
+                </Col>
+              </Row>
+            )}
           </Container>
         )}
       </>

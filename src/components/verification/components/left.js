@@ -11,7 +11,7 @@ import {
 import { url } from "../../../services/details"
 import * as LeftCss from "./left.module.css"
 
-const LeftPage = ({ changeNavListener, currentNav, user }) => {
+const LeftPage = ({ changeNavListener, currentNav, user, departmentName }) => {
   const [isDocSelected, setDocSelected] = useState(false)
   const [activeDocSubElement, setActiveDocSubElement] = useState(true)
   const gender = ["MALE", "FEMALE", "OTHERS"]
@@ -62,7 +62,9 @@ const LeftPage = ({ changeNavListener, currentNav, user }) => {
           <div>
             <p className={`${LeftCss.profileFont} mb-0`}>{user.name}</p>
           
-          
+            <p className={`${LeftCss.genderFont} mb-0 text-muted`}>
+              {departmentName}
+            </p>
           </div>
         </div>
         <div className="py-9">

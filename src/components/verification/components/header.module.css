@@ -1,51 +1,39 @@
-.profile-avater {
-  height: 80px;
-  width: 80px;
-  border-radius: 8px;
+.nav-bg {
+  background-color: #fff;
 }
 
-.profile-font {
-  font-size: 0.9rem;
-  font-weight: 600;
+.bold-text {
+  font-weight: bold;
+  color: black;
 }
 
-.gender-font {
+.name-box {
+  padding: 10px 14px;
+  background-color: rgb(218, 195, 255);
+  border-radius: 10px;
+  color: rgb(136, 65, 250);
+  margin-right: 15px;
+  margin-left: 10px;
   font-size: 0.8rem;
 }
 
-.dot {
-  height: 15px;
-  width: 15px;
-  background-color: rgb(255, 0, 0);
-  border-radius: 50%;
-  display: inline-block;
+.logout:hover {
+  cursor: pointer;
 }
 
-.selection-item {
-  padding: 0.75rem 1.5rem;
+.dropdown {
+  background-color: #fff !important;
+  border-color: #fff !important;
+  color: #000 !important;
 }
 
-.sub-selection-item {
-  padding: 0.4rem 1.5rem;
-}
-.active {
-  background-color: rgb(196, 214, 248);
-  border-radius: 6px;
-}
-
-.active .iconColor [fill] {
-  fill: rgb(0, 86, 247) !important;
-}
-.selection-item svg g [fill] {
-  fill: rgb(95, 95, 95);
-}
-.active span {
-  color: rgb(0, 86, 247);
+.dropdown:focus{
+    
+  outline: none !important;
+  border:2px solid #FF4519;
+  text-decoration: none;
+  
+  box-shadow: none !important;
+  -webkit-appearance: none;   
 }
 
-@media (min-width: 1400px) {
-  .profile-avater {
-    height: 100px;
-    width: 100px;
-  }
-}

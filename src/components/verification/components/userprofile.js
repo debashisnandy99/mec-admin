@@ -4,7 +4,7 @@ import * as FileSaver from "file-saver"
 import { url } from "../../../services/details"
 import * as PendingStyles from "../pending.module.css"
 
-const UserProfile = ({ value, showVerifyDialog }) => {
+const UserProfile = ({ value, showVerifyDialog, failUserDocs }) => {
   const [modalShow, setModalShow] = React.useState({ show: false, url: "" })
 
   return (
@@ -131,6 +131,7 @@ const UserProfile = ({ value, showVerifyDialog }) => {
                       <Button
                         variant="primary"
                         size="lg"
+                        disabled={value.mecId ? false : true}
                         onClick={() => {
                           showVerifyDialog(value)
                         }}
@@ -138,7 +139,9 @@ const UserProfile = ({ value, showVerifyDialog }) => {
                       >
                         Verify
                       </Button>
-                      <Button variant="danger" size="lg" block>
+                      <Button onClick={()=> {
+                        failUserDocs(value.user._id)
+                      }} variant="danger" size="lg" block>
                         Fail
                       </Button>
                     </>

@@ -118,6 +118,34 @@ class PendingPage extends React.Component {
       })
   }
 
+  failUserDocs = id => {
+    console.log(id);
+    axios
+      .post(
+        "/verifier/faildocs",
+        {
+          uid: id,
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${getUser().token}`,
+          },
+        }
+      )
+      .then(res => {
+        this.getData()
+      })
+      .catch(e => {
+        if (e.response) {
+          this.setState({ errorMessage: e.response.data.message })
+          if (e.response.data.message === "jwt expired") {
+            logout()
+          }
+        }
+      })
+  }
+
   render() {
     return (
       <>
@@ -154,6 +182,7 @@ class PendingPage extends React.Component {
               <Col>
                 {this.state.user ? (
                   <UserProfile
+                    failUserDocs={val => this.failUserDocs(val)}
                     showVerifyDialog={val => this.showVerifyDialog(val)}
                     value={this.state.user}
                   ></UserProfile>
